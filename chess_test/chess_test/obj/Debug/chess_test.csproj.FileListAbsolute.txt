@@ -1,0 +1,48 @@
+c:\users\manuel\documents\visual studio 2015\Projects\chess_test\chess_test\bin\Debug\chess_test.exe.config
+c:\users\manuel\documents\visual studio 2015\Projects\chess_test\chess_test\obj\Debug\chess_test.csprojResolveAssemblyReference.cache
+c:\users\manuel\documents\visual studio 2015\Projects\chess_test\chess_test\bin\Debug\chess_test.exe
+c:\users\manuel\documents\visual studio 2015\Projects\chess_test\chess_test\bin\Debug\chess_test.pdb
+c:\users\manuel\documents\visual studio 2015\Projects\chess_test\chess_test\obj\Debug\chess_test.exe
+c:\users\manuel\documents\visual studio 2015\Projects\chess_test\chess_test\obj\Debug\chess_test.pdb
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\chess_test.exe.config
+C:\WinBoard-4.8.0\chess_test\chess_test\obj\Debug\chess_test.exe
+C:\WinBoard-4.8.0\chess_test\chess_test\obj\Debug\chess_test.pdb
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\chess_test.exe
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\chess_test.pdb
+C:\WinBoard-4.8.0\chess_test\chess_test\obj\Debug\chess_test.csprojResolveAssemblyReference.cache
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\Microsoft.Owin.dll
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\Owin.dll
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\Microsoft.Owin.xml
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\ChessDotNet.dll
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\ChessDotNet.pdb
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\chess_test.exe.config
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\obj\Debug\chess_test.exe
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\obj\Debug\chess_test.pdb
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\chess_test.exe
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\chess_test.pdb
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\ChessDotNet.dll
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\Microsoft.Owin.dll
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\Owin.dll
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\ChessDotNet.pdb
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\bin\Debug\Microsoft.Owin.xml
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\chess_test\chess_test\obj\Debug\chess_test.csprojResolveAssemblyReference.cache
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\Microsoft.Speech.dll
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\chess_test.exe.config
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\WinBoard-4.8.0\chess_test\chess_test\obj\Debug\chess_test.exe
+D:\UA\5º Ano\IM\Pratica\Trabalho 2\WinBoard-4.8.0\chess_test\chess_test\obj\Debug\chess_test.pdb
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\Microsoft.Kinect.dll
+C:\WinBoard-4.8.0\chess_test\chess_test\bin\Debug\Microsoft.Kinect.xml
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\chess_test.exe.config
+C:\Users\DC\Desktop\IM\chess_test\chess_test\obj\Debug\chess_test.exe
+C:\Users\DC\Desktop\IM\chess_test\chess_test\obj\Debug\chess_test.pdb
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\chess_test.exe
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\chess_test.pdb
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\ChessDotNet.dll
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Kinect.dll
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Owin.dll
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Owin.dll
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\ChessDotNet.pdb
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Kinect.xml
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Owin.xml
+C:\Users\DC\Desktop\IM\chess_test\chess_test\obj\Debug\chess_test.csprojResolveAssemblyReference.cache
+C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Speech.dll

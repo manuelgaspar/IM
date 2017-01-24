@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<grammar version="1.0" xml:lang="pt-PT" mode="voice" root="basicCmd" 
+xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" >
+
+
+<rule id="basicCmd" scope="public">
+  <ruleref uri="#command"/>
+</rule>
+
+ 
+<rule id="command">
+  <item><ruleref uri="#plays"/></item>
+  <item><ruleref uri="#pieces"/></item>
+</rule>
+
+
+
+<rule id="plays">
+	<item repeat="1">
+	<one-of>
+		<item>"quantas jogadas posso fazer"</item>
+		<item>"qual a melhor jogada"</item>
+		<item>"mexer "</item>
+		<item>"comer"</item>
+		<item>"começar um novo jogo"</item>
+		<item>"quero desistir"</item>
+		<item>"castelo"</item>
+		<item>"tenho peças em risco"</item>
+	</one-of>
+	</item>
+</rule>
+
+<rule id="pieces">
+	<item repeat="0-1">
+	<one-of>
+		<item>"peão"</item>
+		<item>"torre"</item>
+		<item>"cavalo"</item>
+		<item>"bispo"</item>
+		<item>"rainha"</item>
+		<item>"rei"</item>
+	</one-of>
+	</item>
+</rule>
+
+
+
+</grammar>
