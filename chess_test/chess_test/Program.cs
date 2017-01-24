@@ -72,7 +72,7 @@ namespace chess_test
                 myKinect.DepthStream.Range = DepthRange.Near;
                 myKinect.SkeletonStream.EnableTrackingInNearRange = true;
                 myKinect.SkeletonStream.TrackingMode = SkeletonTrackingMode.Seated;
-                myKinect.SkeletonFrameReady += MyKinect_SkeletonFrameReady;
+                //myKinect.SkeletonFrameReady += MyKinect_SkeletonFrameReady;
                 //myKinect.SkeletonFrameReady -= MyKinect_SkeletonFrameReady;
                 myKinect.Start();
                 

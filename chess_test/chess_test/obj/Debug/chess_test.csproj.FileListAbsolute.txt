@@ -46,3 +46,6 @@ C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Kinect.xml
 C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Owin.xml
 C:\Users\DC\Desktop\IM\chess_test\chess_test\obj\Debug\chess_test.csprojResolveAssemblyReference.cache
 C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Speech.dll
+C:\Users\DC\Documents\GitHub\IM\chess_test\chess_test\bin\Debug\chess_test.exe.config
+C:\Users\DC\Documents\GitHub\IM\chess_test\chess_test\obj\Debug\chess_test.exe
+C:\Users\DC\Documents\GitHub\IM\chess_test\chess_test\obj\Debug\chess_test.pdb
