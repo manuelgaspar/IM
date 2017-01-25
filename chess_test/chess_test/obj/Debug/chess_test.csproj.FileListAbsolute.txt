@@ -49,3 +49,6 @@ C:\Users\DC\Desktop\IM\chess_test\chess_test\bin\Debug\Microsoft.Speech.dll
 C:\Users\DC\Documents\GitHub\IM\chess_test\chess_test\bin\Debug\chess_test.exe.config
 C:\Users\DC\Documents\GitHub\IM\chess_test\chess_test\obj\Debug\chess_test.exe
 C:\Users\DC\Documents\GitHub\IM\chess_test\chess_test\obj\Debug\chess_test.pdb
+D:\UA\5º Ano\IM\Pratica\Trabalho 4\chess_test\chess_test\bin\Debug\chess_test.exe.config
+D:\UA\5º Ano\IM\Pratica\Trabalho 4\chess_test\chess_test\obj\Debug\chess_test.exe
+D:\UA\5º Ano\IM\Pratica\Trabalho 4\chess_test\chess_test\obj\Debug\chess_test.pdb

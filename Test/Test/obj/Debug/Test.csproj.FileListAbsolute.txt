@@ -1,0 +1,9 @@
+C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Test.exe.config
+C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Test.exe
+C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Test.pdb
+C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Microsoft.Kinect.dll
+C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Microsoft.Speech.dll
+C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Microsoft.Kinect.xml
+C:\Users\Manuel\Desktop\Test\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+C:\Users\Manuel\Desktop\Test\Test\obj\Debug\Test.exe
+C:\Users\Manuel\Desktop\Test\Test\obj\Debug\Test.pdb
