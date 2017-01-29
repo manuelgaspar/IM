@@ -20,12 +20,11 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" >
 	<one-of>
 		<item>"quantas jogadas posso fazer"</item>
 		<item>"qual a melhor jogada"</item>
-		<item>"mexer "</item>
-		<item>"comer"</item>
+		<item>"quero mexer "</item>
+		<item>"quero comer"</item>
 		<item>"começar um novo jogo"</item>
 		<item>"quero desistir"</item>
-		<item>"castelo"</item>
-		<item>"tenho peças em risco"</item>
+		<item>"fazer castelo"</item>
 	</one-of>
 	</item>
 </rule>

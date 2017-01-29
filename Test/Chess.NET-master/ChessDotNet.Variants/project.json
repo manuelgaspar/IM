@@ -1,0 +1,22 @@
+{
+    "buildOptions": {
+        "emitEntryPoint": false
+    },
+    "version": "0.9.2.1",
+    "dependencies": {
+        "ChessDotNet": "0.9.2-*"
+    },
+    "frameworks": {
+        "netcoreapp1.0": {
+            "dependencies": {
+                "Microsoft.NETCore.App": {
+                    "version": "1.0.0",
+                    "type": "platform"
+                }
+            }
+        },
+        "net452": {}
+    },
+    "authors": [ "ProgramFOX" ],
+    "runtimes": { "any": {}, "win": {} }
+}

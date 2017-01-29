@@ -22,7 +22,7 @@ namespace Test
 
     class Gestures
     {
-        public static int state = 0; // state machine
+        public static int state = 0; // state machine for complete gesture
         public static int frame = 0; // frame number
 
         public event GestureRecognized recog;
@@ -32,7 +32,6 @@ namespace Test
         {
             int code = 0;
             int maxframes = 30;
-            string message = " ";
 
             GestureEventArgs ev = new GestureEventArgs();
             
@@ -43,7 +42,7 @@ namespace Test
                 {
                     skeletons = new Skeleton[frame.SkeletonArrayLength];
                     frame.CopySkeletonDataTo(skeletons);
-                    //message = "Frame";
+                    
                 }
             }
             if (skeletons == null) return;
@@ -52,15 +51,15 @@ namespace Test
 
                 if (skeleton.TrackingState == SkeletonTrackingState.Tracked)
                 {
+
                     if (state == 0)
                     {
 
                         if (ValidStartPos(skeleton))
                         {
                             state = 1;
-                            ev.gesture = "Make a move";
-                            recog(this, ev);
-                            //  Console.WriteLine(message);
+                            //ev.gesture = "Make a move";
+                            
                             frame = 0;
                         }
 
@@ -77,56 +76,54 @@ namespace Test
                         if (SwipeLeft(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "SwipeLeft";
-                            recog(this, ev);
-                            //Console.WriteLine(message);
+                            //ev.gesture = "SwipeLeft";
+                            
                             code = 4;
                         }
                         else if (SwipeRight(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "SwipeRight";
-                            recog(this, ev);
+                            //ev.gesture = "SwipeRight";
                             code = 6;
                         }
                         else if (Select(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "Selected";
-                            recog(this, ev);
+                            //ev.gesture = "Selected";
                             code = 5;
                         }
                         else if (SwipeUp(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "SwipeUp";
-                            recog(this, ev);
+                            //ev.gesture = "SwipeUp";
                             code = 8;
                         }
                         else if (SwipeDown(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "SwipeDown";
-                            recog(this, ev);
+                            //ev.gesture = "SwipeDown";
                             code = 2;
                         }
                         else if (Clap(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "Clap";
-                            recog(this, ev);
+                            //ev.gesture = "Clap";
                             code = 1;
                         }
                         else if (Anular(skeleton))
                         {
                             state = 0;
-                            ev.gesture = "Cancelar";
-                            recog(this, ev);
+                            //ev.gesture = "Cancelar";
+                           
                             code = 3;
+                            
                         }
-                        
 
+                        ev.codeGesture = code;
+                        recog(this, ev);
                     }
+
+                    
                 }
             }
 
@@ -276,10 +273,10 @@ namespace Test
             Joint ELeft = skeleton.Joints[JointType.ElbowLeft];
             Joint HLeft = skeleton.Joints[JointType.HandLeft];
 
-            if ((SRight.Position.Y - ERight.Position.Y > 0.2f) &&
+            if ((SRight.Position.Y > ERight.Position.Y) &&
                 (Math.Abs(SRight.Position.Y - HRight.Position.Y) < 0.3f) &&
                 (ELeft.Position.Y < HLeft.Position.Y) &&
-                (HRight.Position.X - SRight.Position.X > 0.1f) &&
+                (HRight.Position.X > SRight.Position.X ) &&
                 (Math.Abs(HLeft.Position.X - HRight.Position.X) > 0.5f) &&
                 (Math.Abs(HLeft.Position.Y - SRight.Position.Y) < 0.2f))
             {
@@ -294,7 +291,7 @@ namespace Test
 
     public class GestureEventArgs : EventArgs
     {
-        public string gesture;
+        public int codeGesture;
     }
 
 

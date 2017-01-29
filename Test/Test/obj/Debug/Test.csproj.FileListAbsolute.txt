@@ -7,3 +7,14 @@ C:\Users\Manuel\Desktop\Test\Test\bin\Debug\Microsoft.Kinect.xml
 C:\Users\Manuel\Desktop\Test\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
 C:\Users\Manuel\Desktop\Test\Test\obj\Debug\Test.exe
 C:\Users\Manuel\Desktop\Test\Test\obj\Debug\Test.pdb
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\Test.exe.config
+C:\Users\DC\Documents\GitHub\IM\Test\Test\obj\Debug\Test.exe
+C:\Users\DC\Documents\GitHub\IM\Test\Test\obj\Debug\Test.pdb
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\Test.exe
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\Test.pdb
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\Microsoft.Kinect.dll
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\Microsoft.Speech.dll
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\Microsoft.Kinect.xml
+C:\Users\DC\Documents\GitHub\IM\Test\Test\obj\Debug\Test.csprojResolveAssemblyReference.cache
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\ChessDotNet.dll
+C:\Users\DC\Documents\GitHub\IM\Test\Test\bin\Debug\ChessDotNet.pdb
