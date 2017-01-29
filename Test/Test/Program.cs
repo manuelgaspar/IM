@@ -151,7 +151,7 @@ namespace Test
             }
             else if (code == 3) // Cancel
             {
-                cmd = "1-d1-d1";
+                cmd = "0-d1-d1";
                 process(cmd);
             }
 
@@ -280,69 +280,77 @@ namespace Test
             Random rand = new Random();
             int r;
 
-            if(stArr[1]== "mexer")
+            if(stArr[1]== "mexer") // basic move
             {
                 switch (stArr[2])
                 {
                     case "peão":
-                        //cmd="3-"
+                        cmd = "3-p-a1";
                         break;
                     case "rei":
-                        //
+                        cmd = "3-r-a1";
                         break;
                     case "rainha":
+                        cmd = "3-q-a1";
                         break;
                     case "cavalo":
+                        cmd = "3-n-a1";
                         break;
                     case "bispo":
+                        cmd = "3-b-a1";
                         break;
                     case "torre":
+                        cmd = "3-r-a1";
                         break;
                     default:
+                        cmd = "6-p1-a1";// it may never happen
                         break;
                 }
             }
-            else if(stArr[1] == "comer")
+            else if(stArr[1] == "comer") // capture piece
             {
                 switch (stArr[2])
                 {
                     case "peão":
-                        //cmd=""
+                        cmd = "4-p-a1";
                         break;
                     case "rei":
-                        //
+                        cmd = "4-k-a1";
                         break;
                     case "rainha":
+                        cmd = "4-q-a1";
                         break;
                     case "cavalo":
+                        cmd = "4-n-a1";
                         break;
                     case "bispo":
+                        cmd = "4-b-a1";
                         break;
                     case "torre":
+                        cmd = "4-r-a1";
                         break;
                     default:
+                        cmd = "6-j1-a1"; // it may never happen
                         break;
                 }
             }
             else if(stArr[0]=="qual")
             {
-                cmd = "";
+                cmd = "6-d2-d2"; // help
             }
             else if (stArr[0] == "quantas")
             {
-                cmd = "";
+                cmd = "5-f1-f1"; // number of plays
             }
             else if (stArr[0] == "fazer")
             {
-                cmd = "";
+                cmd = "2-c1-c1"; //castle up
             }
             else if (stArr[1] == "desistir" || stArr[0]=="começar")
             {
-                cmd = "";
+                cmd = "1-a1-a1"; //give up
             }
-
-
-
+            
 
             if (go)
             {
@@ -426,31 +434,94 @@ namespace Test
 
             IEnumerable<Move> validMoves;
             Tts fala = new Tts();
-            string move, posf, posi;
+            string move,movement,piece, posf, posi;
             Move movepi; // Move to be done 
-            bool valid;  // Valid play?
+            bool valid, castleK, castleQ; ;  // Valid plays?
+            int countm = 0; // count movements
             string[] aux, aux1;
             List<string> posfL = new List<string>(); //List of possible final positions letters 
             List<string> posfN = new List<string>(); //List of possible final positions numbers 
 
-
+            if(cmd.Length<5) //bugs
+            {
+                fala.Speak("Existem baratas no programa");
+            }
+            
             aux = cmd.Split('-');
-
+            move = movement = "";
             //posi = aux[1];
             //posf = aux[2];
             validMoves = game.GetValidMoves(game.WhoseTurn); // get valid moves for player
 
-            if(aux[0] == "1")
+            if(aux[0] == "0") // Cancel
             {
                 fala.Speak("Ok, vou cancelar!!!");
                 Cstate = 0;
                 flag = false;
 
             }
-            /*else if (aux[0] == "3")//jogada simples
+            else if (aux[0] == "1") //give up
             {
 
-                //jogar
+                Console.WriteLine("bestmove a1a1");
+
+            }
+            else if (aux[0] == "2") //Castle up
+            {
+
+                if ("White" == game.WhoseTurn.ToString())
+                {
+                    Move e1g1 = new Move("e1", "g1", Player.White);
+                    Move e1c1 = new Move("e1", "c1", Player.White);
+                    castleK = game.IsValidMove(e1g1);
+                    castleQ = game.IsValidMove(e1c1);
+                    if (castleK)
+                    {
+                        game.ApplyMove(e1g1, castleK);
+                        Console.WriteLine("bestmove e1g1");
+                    }
+                    else if (castleQ)
+                    {
+                        game.ApplyMove(e1c1, castleQ);
+                        Console.WriteLine("bestmove e1c1");
+                    }
+                    else
+                    {
+                        //Console.WriteLine("Não pode fazer castelo");
+                        fala.Speak("Não pode fazer castelo!");
+                    }
+
+                }
+                else
+                {
+
+                    Move e8g8 = new Move("E8", "G8", Player.Black);
+                    Move e8c8 = new Move("E8", "C8", Player.Black);
+                    castleK = game.IsValidMove(e8g8);
+                    castleQ = game.IsValidMove(e8c8);
+                    if (castleK)
+                    {
+                        game.ApplyMove(e8g8, castleK);
+                        Console.WriteLine("bestmove e8g8");
+                    }
+                    else if (castleQ)
+                    {
+                        game.ApplyMove(e8c8, castleQ);
+                        Console.WriteLine("bestmove e8c8");
+                    }
+                    else
+                    {
+                        fala.Speak("Não pode fazer castelo");
+
+                    }
+
+                }
+
+            }
+            else if (aux[0] == "3") //basic move
+            {
+                /*
+                //play
                 movepi = new Move(posi, posf, game.WhoseTurn);
                 valid = game.IsValidMove(movepi);
                 MoveType type = game.ApplyMove(movepi, valid);
@@ -464,63 +535,64 @@ namespace Test
                 else
                 {
                     // Console.WriteLine("Jogada inválida");
+                }*/
+
+            }
+            else if (aux[0] == "4") //capture piece
+            {
+                //find piece to capture
+                for (int i = 0; i < validMoves.Count(); i++)
+                {
+                    move = validMoves.ElementAt<Move>(i).ToString().ToLower();
+                    aux1 = move.Split('-');
+                    if (game.GetPieceAt(new Position(aux1[1])) != null) // is final position a piece?
+                    {
+                        piece = game.GetPieceAt(new Position(aux1[1])).GetFenCharacter().ToString().ToLower();
+                        if (aux[1] == piece) // is it the piece we are looking for
+                        {
+                            movement = move;
+                            countm++;
+                        }
+                    }
+
                 }
 
-            }*/
-            if (aux[0] == "4")  //jogadas possiveis com a peça
+                if (movement != "" && countm==1)
+                {
+                    countm = 0;
+                    aux1 = movement.Split('-');
+                    Console.WriteLine("bestmove {0}{1}", aux1[0], aux1[1]);
+                    movepi = new Move(aux1[0], aux1[1], game.WhoseTurn);
+                    valid = game.IsValidMove(movepi);
+                    MoveType type = game.ApplyMove(movepi, valid);
+
+                }
+                else if (movement != "" && countm> 1)
+                {
+                    fala.Speak("Tem mais de uma possibilidade, indique qual a peça a mover!");
+                    // ativar cenas para complementar a jogada
+
+                }
+                else
+                {
+                    fala.Speak("Não possui jogadas para capturar "+ aux[1]);
+                }
+
+            }
+            else if (aux[0] == "5") //number of plays
             {
 
-                if (game.GetPieceAt(new Position(aux[1])) != null)
+                movement = validMoves.Count().ToString();
+                if (movement == "1")
                 {
-
-                    for (int i = 0; i < validMoves.Count(); i++)
-                    {
-                        move = validMoves.ElementAt<Move>(i).ToString().ToLower();
-                        aux1 = move.Split('-');
-
-
-                        if (aux1[0] == aux[1])
-                        {
-                            string auxes = aux1[1];
-                            flag = false;
-
-                            for (int j = 1; j < 9; j++)
-                            {
-                                // Console.WriteLine("if: {0}=={1}", letras[j], auxes[0]);
-                                if (letras[j] == auxes[0].ToString())
-                                {
-                                    posfL.Add(j.ToString());
-                                    posfN.Add(auxes[1].ToString());
-                                }
-                            }
-
-
-
-                        }
-
-                    }
-
-                    if (!flag)
-                    {
-                        arguments = string.Join(" ", "2", coordL[pi.letra], coordN[pi.num], posfL.Count());
-                        string argAux;
-                        for (int k = 0; k < posfL.Count(); k++)
-                        {
-                            argAux = " " + coordL[Int32.Parse(posfL.ElementAt(k))] + " " + coordN[Int32.Parse(posfN.ElementAt(k))];
-                            arguments = arguments + argAux;
-                        }
-                        auxArgument = arguments;
-                        pf.letra = Int32.Parse(posfL.ElementAt(0));
-                        pf.num = Int32.Parse(posfN.ElementAt(0));
-                        arguments = arguments + " " + coordL[pf.letra] + " " + coordN[pf.num];
-                        //Console.WriteLine(arguments);
-
-
-                    }
-
+                    movement = "Tem 1 movimento possível!";
                 }
-
-
+                else
+                {
+                    movement = "Tem" + movement + "movimentos possíveis!";
+                }
+                fala.Speak(movement);
+                new SpeechRecognizer("grammar.grxml");
 
             }
             else if (aux[0] == "6") // help
@@ -551,8 +623,11 @@ namespace Test
 
                 // Console.WriteLine("{0},{1}->{2},{3}", pf.letra, pf.num, pi.letra, pi.num);
 
+            }
+            else if (aux[0] == "7") //é capaz de ser preciso futuramente
+            {
 
-
+               
             }
 
         }
