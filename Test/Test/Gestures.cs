@@ -232,14 +232,17 @@ namespace Test
 
         private static bool Select(Skeleton skeleton)
         {
-
             Joint SRight = skeleton.Joints[JointType.ShoulderRight];
             Joint HRight = skeleton.Joints[JointType.HandRight];
             Joint ELeft = skeleton.Joints[JointType.ElbowLeft];
             Joint HLeft = skeleton.Joints[JointType.HandLeft];
+            Joint SLeft = skeleton.Joints[JointType.ShoulderLeft];
+
+            //Console.WriteLine(Math.Abs(SRight.Position.Y - HRight.Position.Y) + "< 0.3?");
+            //Console.WriteLine(Math.Abs(HRight.Position.Z - SLeft.Position.Z) + "> 0.35?");
 
             if ((Math.Abs(SRight.Position.Y - HRight.Position.Y) < 0.3f) &&
-                (Math.Abs(HRight.Position.Z - SRight.Position.Z) > 0.5f) &&
+                (Math.Abs(HRight.Position.Z - SLeft.Position.Z) > 0.5f) &&
                 (ELeft.Position.Y - HLeft.Position.Y > 0.2f))
             {
                 return true;

@@ -37,11 +37,14 @@ namespace Test
             public int num;
 
         }
-
+        public static Tts fala = new Tts(); // voice feedback
+        public static string initp = "",lastSP="";                //inicial piece || last command
+        public static List<string> posi = new List<string>(); //list of initial positions
+        public static List<string> posf = new List<string>(); //
         public static ChessGame game = new ChessGame();
         public static Process p = new Process();
         public static position pi, pf;
-        public static bool flag = false;  // flag para saber a posição a actualizar (True-> Pi || False -> pf)
+        public static bool flag = false;  // flag for confidence levels
         public static bool go = false;   // flag to detect player turn (True-> Player turn)
         public static int Cstate = 0;   // state machine for complementary command
         public static KinectSensor myKinect;
@@ -66,8 +69,7 @@ namespace Test
             p.Start();
 
             // init feedback coordinates
-            pi.num = 1;
-            pi.letra = 1;
+           
             pf.num = 1;
             pf.letra = 1;
 
@@ -105,7 +107,6 @@ namespace Test
             do
             {
                 input = Console.ReadLine();
-                Debug.Write("reading terminal");
                 exit = uci(input);
 
 
@@ -124,7 +125,6 @@ namespace Test
             
             if(go)
             {
-                Debug.Write("go\n");
                 TranslateG(e.codeGesture);
 
             }
@@ -143,7 +143,7 @@ namespace Test
             {
                 cmd = "6-d1-d1";
                 process(cmd);
-                arguments = string.Join(" ", "3", coordL[pi.letra], coordN[pi.num], "1", coordL[pf.letra], coordN[pf.num]);
+                arguments = string.Join(" ", "3", coordL[pf.letra], coordN[pf.num], "1", coordL[pf.letra], coordN[pf.num]);
                 p.StartInfo.Arguments = arguments;
                 p.Kill();
                 p.Start();
@@ -153,118 +153,71 @@ namespace Test
             {
                 cmd = "0-d1-d1";
                 process(cmd);
+                if (!p.HasExited)
+                {
+                    p.Kill();
+                    arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
+                    p.StartInfo.Arguments = arguments;
+                    p.Start();
+                }
+               
+
             }
 
-            if (flag)
+
+
+            if (code == 8) // swipe up
             {
+                pf.num++;
+                if (pf.num > 8) pf.num = 1;
+                arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
+                p.StartInfo.Arguments = arguments;
+                p.Kill();
+                p.Start();
+                // Console.WriteLine("up");
 
-                if (code == 8) // swipe up
-                {
-
-                    pi.num++;
-                    if (pi.num > 8) pi.num = 1;
-                    arguments = string.Join(" ", "0", coordL[pi.letra], coordN[pi.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-
-                }
-                else if (code == 2) // swipe down
-                {
-                    pi.num--;
-                    if (pi.num < 1) pi.num = 8;
-                    arguments = string.Join(" ", "0", coordL[pi.letra], coordN[pi.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-
-                }
-                else if (code == 4) // swipe left
-                {
-                    pi.letra--;
-                    if (pi.letra < 1) pi.letra = 8;
-                    arguments = string.Join(" ", "0", coordL[pi.letra], coordN[pi.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-
-                }
-                else if (code == 6) // swipe right
-                {
-                    pi.letra++;
-                    if (pi.letra > 8) pi.letra = 1;
-                    arguments = string.Join(" ", "0", coordL[pi.letra], coordN[pi.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-
-                }
-                else if (code == 5) // select
-                {
-                    cmd = "4-" + letras[pi.letra] + pi.num + "-" + letras[pf.letra] + pf.num;
-                    //process(cmd);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-
-                }
             }
-            else
+            else if (code == 2) // swipe down
             {
+                pf.num--;
+                if (pf.num < 1) pf.num = 8;
+                arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
+                p.StartInfo.Arguments = arguments;
+                p.Kill();
+                p.Start();
+                //Console.WriteLine("down");
 
-                if (code == 8) // swipe up
+            }
+            else if (code == 4) // swipe left
+            {
+                pf.letra--;
+                if (pf.letra < 1) pf.letra = 8;
+                arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
+                p.StartInfo.Arguments = arguments;
+                p.Kill();
+                p.Start();
+                //Console.WriteLine("Left");
+
+            }
+            else if (code == 6) // swipe right
+            {
+                pf.letra++;
+                if (pf.letra > 8) pf.letra = 1;
+                arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
+                p.StartInfo.Arguments = arguments;
+                p.Kill();
+                p.Start();
+                //Console.WriteLine("Right");
+            }
+            else if (code == 5) // select
+            {
+                if (Cstate > 0)
                 {
-                    pf.num++;
-                    if (pf.num > 8) pf.num = 1;
-                    arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-                    Console.WriteLine("up");
-
+                    cmd = "3-j-" + letras[pf.letra] + pf.num;
+                    process(cmd);
                 }
-                else if (code == 2) // swipe down
-                {
-                    pf.num--;
-                    if (pf.num < 1) pf.num = 8;
-                    arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-                    Console.WriteLine("down");
 
-                }
-                else if (code == 4) // swipe left
-                {
-                    pf.letra--;
-                    if (pf.letra < 1) pf.letra = 8;
-                    arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-                    Console.WriteLine("Left");
 
-                }
-                else if (code == 6) // swipe right
-                {
-                    pf.letra++;
-                    if (pf.letra > 8) pf.letra = 1;
-                    arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
-                    p.StartInfo.Arguments = arguments;
-                    p.Kill();
-                    p.Start();
-                    Console.WriteLine("Right");
-                }
-                else if (code == 5) // select
-                {
-                    //flag = !flag;
-
-                    cmd = "3-" + letras[pi.letra] + pi.num + "-" + letras[pf.letra] + pf.num;
-                    //process(cmd);
-                    Console.WriteLine(cmd);
-
-                }
-                
             }
 
         }
@@ -274,87 +227,149 @@ namespace Test
         public void translateSP(string s, float confidence)
         {
             string[] stArr = s.Split(' ');
+            bool validM = false; 
             string cmd = string.Empty;
-            Tts f = new Tts();
             string[] badRecog = { "Não percebi.", "Pode repetir?", "Não ouvi bem", "Estamos com problemas de comunicação." };
             Random rand = new Random();
-            int r;
+            int r; // to select random voice feedback
 
-            if(stArr[1]== "mexer") // basic move
+            if (stArr.Length > 2)
             {
-                switch (stArr[2])
-                {
-                    case "peão":
-                        cmd = "3-p-a1";
-                        break;
-                    case "rei":
-                        cmd = "3-r-a1";
-                        break;
-                    case "rainha":
-                        cmd = "3-q-a1";
-                        break;
-                    case "cavalo":
-                        cmd = "3-n-a1";
-                        break;
-                    case "bispo":
-                        cmd = "3-b-a1";
-                        break;
-                    case "torre":
-                        cmd = "3-r-a1";
-                        break;
-                    default:
-                        cmd = "6-p1-a1";// it may never happen
-                        break;
-                }
+                validM = true; // valid command
             }
-            else if(stArr[1] == "comer") // capture piece
-            {
-                switch (stArr[2])
-                {
-                    case "peão":
-                        cmd = "4-p-a1";
-                        break;
-                    case "rei":
-                        cmd = "4-k-a1";
-                        break;
-                    case "rainha":
-                        cmd = "4-q-a1";
-                        break;
-                    case "cavalo":
-                        cmd = "4-n-a1";
-                        break;
-                    case "bispo":
-                        cmd = "4-b-a1";
-                        break;
-                    case "torre":
-                        cmd = "4-r-a1";
-                        break;
-                    default:
-                        cmd = "6-j1-a1"; // it may never happen
-                        break;
-                }
-            }
-            else if(stArr[0]=="qual")
-            {
-                cmd = "6-d2-d2"; // help
-            }
-            else if (stArr[0] == "quantas")
-            {
-                cmd = "5-f1-f1"; // number of plays
-            }
-            else if (stArr[0] == "fazer")
-            {
-                cmd = "2-c1-c1"; //castle up
-            }
-            else if (stArr[1] == "desistir" || stArr[0]=="começar")
-            {
-                cmd = "1-a1-a1"; //give up
-            }
-            
-
             if (go)
             {
-                process(cmd);
+                if (confidence < 0.4)
+                {
+                    r = rand.Next(0, 4);
+                    fala.Speak(badRecog[r]);
+                    return;
+                }
+                if (confidence >= 0.4 && confidence < 0.75 && validM)
+                {
+                    flag = true;
+                    lastSP = s;
+                    switch (stArr[1])
+                    {
+                        case "mexer":
+                            fala.Speak("Quer mesmo mexer " + stArr[2] + " ?");
+                            break;
+                        case "capturar":
+                            fala.Speak("Quer mesmo capturar " + stArr[2] + " ?");
+                            break;
+                        case "jogadas":
+                            fala.Speak("Quer saber quantas jogadas pode fazer?");
+                            break;
+                        case "a":
+                            fala.Speak("Quer saber a melhor jogada?");
+                            break;
+                        case "desistir":
+                            fala.Speak("Quer mesmo desistir?");
+                            break;
+                        case "um":
+                            fala.Speak("Quer mesmo desistir?");
+                            break;
+                        case "castelo":
+                            fala.Speak("Quer mesmo fazer castelo?");
+                            break;
+
+                    }
+
+                }
+                if (confidence >= 0.75)
+                {
+                    if (s == "sim" && flag)
+                    {
+                        stArr = lastSP.Split(' ');
+                        flag = false;
+                        if (stArr.Length > 2)
+                        {
+                            validM = true; // valid command
+                        }
+                        fala.Speak("Ok!");
+                    }
+                    else if (s == "não" && flag)
+                    {
+                        flag = false;
+                        fala.Speak("O que deseja fazer?");
+                        return;
+                    }
+
+                    if (!flag && validM)
+                    {
+                        if (stArr[1] == "mexer") // basic move
+                        {
+                            switch (stArr[2])
+                            {
+                                case "peão":
+                                    cmd = "3-p-a1";
+                                    break;
+                                case "rei":
+                                    cmd = "3-r-a1";
+                                    break;
+                                case "rainha":
+                                    cmd = "3-q-a1";
+                                    break;
+                                case "cavalo":
+                                    cmd = "3-n-a1";
+                                    break;
+                                case "bispo":
+                                    cmd = "3-b-a1";
+                                    break;
+                                case "torre":
+                                    cmd = "3-r-a1";
+                                    break;
+
+                            }
+                            fala.Speak("Afirmativo");
+                        }
+                        else if (stArr[1] == "capturar") // capture piece
+                        {
+                            switch (stArr[2])
+                            {
+                                case "peão":
+                                    cmd = "4-p-a1";
+                                    break;
+                                case "rei":
+                                    cmd = "4-k-a1";
+                                    break;
+                                case "rainha":
+                                    cmd = "4-q-a1";
+                                    break;
+                                case "cavalo":
+                                    cmd = "4-n-a1";
+                                    break;
+                                case "bispo":
+                                    cmd = "4-b-a1";
+                                    break;
+                                case "torre":
+                                    cmd = "4-r-a1";
+                                    break;
+
+                            }
+                            fala.Speak("Afirmativo");
+                        }
+                        else if (stArr[0] == "qual")
+                        {
+                            cmd = "6-d2-d2"; // help
+                        }
+                        else if (stArr[0] == "quantas")
+                        {
+                            cmd = "5-f1-f1"; // number of plays
+                        }
+                        else if (stArr[1] == "fazer")
+                        {
+                            cmd = "2-c1-c1"; //castle up
+                        }
+                        else if (stArr[1] == "desistir" || stArr[0] == "começar")
+                        {
+                            cmd = "1-a1-a1"; //give up
+                        }
+                        
+                        process(cmd);
+
+                    }
+                }
             }
         }
 
@@ -388,13 +403,17 @@ namespace Test
             else if (str1 == "ucinewgame")
             {
                 game = new ChessGame(); //start a new game
+                if (!p.HasExited)
+                {
+                    p.Kill();
+                }
             }
             else if (str1[0] == 'g' && str1[1] == 'o')
             {
                 go = true; // activate gesture recognition
 
                 //activate feedback
-                arguments = string.Join(" ", "0", coordL[pi.letra], coordN[pi.num]);
+                arguments = string.Join(" ", "0", coordL[pf.letra], coordN[pf.num]);
                 p.StartInfo.Arguments = arguments;
                 p.Start();
                 
@@ -431,39 +450,36 @@ namespace Test
         #region Process
         static void process(string cmd)
         {
-
             IEnumerable<Move> validMoves;
-            Tts fala = new Tts();
-            string move,movement,piece, posf, posi;
+            string move,movement,piece;
             Move movepi; // Move to be done 
             bool valid, castleK, castleQ; ;  // Valid plays?
-            int countm = 0; // count movements
             string[] aux, aux1;
             List<string> posfL = new List<string>(); //List of possible final positions letters 
             List<string> posfN = new List<string>(); //List of possible final positions numbers 
 
-            if(cmd.Length<5) //bugs
+            if (cmd.Length<5) //bugs
             {
-                fala.Speak("Existem baratas no programa");
+                return;
             }
             
             aux = cmd.Split('-');
             move = movement = "";
-            //posi = aux[1];
-            //posf = aux[2];
             validMoves = game.GetValidMoves(game.WhoseTurn); // get valid moves for player
 
             if(aux[0] == "0") // Cancel
             {
                 fala.Speak("Ok, vou cancelar!!!");
                 Cstate = 0;
-                flag = false;
+                posf.Clear();
+                posi.Clear();
 
             }
             else if (aux[0] == "1") //give up
             {
 
                 Console.WriteLine("bestmove a1a1");
+                p.Kill();
 
             }
             else if (aux[0] == "2") //Castle up
@@ -479,15 +495,16 @@ namespace Test
                     {
                         game.ApplyMove(e1g1, castleK);
                         Console.WriteLine("bestmove e1g1");
+                        p.Kill();
                     }
                     else if (castleQ)
                     {
                         game.ApplyMove(e1c1, castleQ);
                         Console.WriteLine("bestmove e1c1");
+                        p.Kill();
                     }
                     else
                     {
-                        //Console.WriteLine("Não pode fazer castelo");
                         fala.Speak("Não pode fazer castelo!");
                     }
 
@@ -503,11 +520,13 @@ namespace Test
                     {
                         game.ApplyMove(e8g8, castleK);
                         Console.WriteLine("bestmove e8g8");
+                        p.Kill();
                     }
                     else if (castleQ)
                     {
                         game.ApplyMove(e8c8, castleQ);
                         Console.WriteLine("bestmove e8c8");
+                        p.Kill();
                     }
                     else
                     {
@@ -520,22 +539,82 @@ namespace Test
             }
             else if (aux[0] == "3") //basic move
             {
-                /*
-                //play
-                movepi = new Move(posi, posf, game.WhoseTurn);
-                valid = game.IsValidMove(movepi);
-                MoveType type = game.ApplyMove(movepi, valid);
-                if (valid)
+                
+                if(Cstate==0)       // received voice command
                 {
-                    Console.WriteLine("bestmove {0}{1}", posi, posf);
-                    go = false;
-                    p.Kill();
+                    Cstate = 1;     // gesture input
+                    initp = aux[1];  // store initial piece
+                }
+                else if( Cstate==1) // received gesture input
+                {
+                    posf.Add(aux[2]);  // store final position
+                    //encontrar posi
+                    posi.Clear(); //just in case
+                    for (int i = 0; i < validMoves.Count(); i++)
+                    {
+                        move = validMoves.ElementAt<Move>(i).ToString().ToLower(); // get a valid move
+                        aux1 = move.Split('-');
+                        if (aux1[1] == posf[0]) // check move final position 
+                        {
+                            piece = game.GetPieceAt(new Position(aux1[0])).GetFenCharacter().ToString().ToLower();//get piece
+                            if (piece == initp)  //check piece
+                            {
+                                posi.Add(aux1[0]); // store initial position coordinates
+                            }
+
+                        }
+                    }
+
+                    if(posi.Count>1)
+                    {
+                        fala.Speak("Existe mais de um movimento possível, selecione a peça que deseja mover!");
+                        Cstate = 2; //more than one movement possible
+                    }
+                    else if(posi.Count == 0)
+                    {
+                        Cstate = 0;
+                        fala.Speak("Não existe nenhuma jogada com a peça escolhida!");
+                    }
+                    else
+                    {
+                        Cstate = 0;
+                        //play
+                        movepi = new Move(posi[0], posf[0], game.WhoseTurn);
+                        valid = game.IsValidMove(movepi);
+                        MoveType type = game.ApplyMove(movepi, valid);
+                        Console.WriteLine("bestmove {0}{1}", posi[0], posf[0]);
+                        go = false;
+                        p.Kill();
+                        posf.Clear();
+                        posi.Clear();
+
+                    }
 
                 }
-                else
+                else if(Cstate==2) // addicional information needed
                 {
-                    // Console.WriteLine("Jogada inválida");
-                }*/
+                    for (int i=0; i<posi.Count;i++)
+                    {
+                        if(posi[i]==aux[2]) //check possible initial plays
+                        {
+                            Cstate = 0;
+                            //play
+                            movepi = new Move(posi[i], posf[0], game.WhoseTurn);
+                            valid = game.IsValidMove(movepi);
+                            MoveType type = game.ApplyMove(movepi, valid);
+                            Console.WriteLine("bestmove {0}{1}", posi[i], posf[0]);
+                            go = false;
+                            p.Kill();
+                            posf.Clear();
+                            posi.Clear();
+
+                            break;
+                        }
+                        
+                        
+                    }
+                    
+                }
 
             }
             else if (aux[0] == "4") //capture piece
@@ -550,32 +629,35 @@ namespace Test
                         piece = game.GetPieceAt(new Position(aux1[1])).GetFenCharacter().ToString().ToLower();
                         if (aux[1] == piece) // is it the piece we are looking for
                         {
-                            movement = move;
-                            countm++;
+                            posf.Add(aux1[1]);
+                            posi.Add(aux1[0]);
                         }
                     }
 
                 }
 
-                if (movement != "" && countm==1)
+                if (posi.Count==1 && posf.Count==1)
                 {
-                    countm = 0;
-                    aux1 = movement.Split('-');
-                    Console.WriteLine("bestmove {0}{1}", aux1[0], aux1[1]);
-                    movepi = new Move(aux1[0], aux1[1], game.WhoseTurn);
+                    
+                    movepi = new Move(posi[0], posf[0], game.WhoseTurn);
                     valid = game.IsValidMove(movepi);
                     MoveType type = game.ApplyMove(movepi, valid);
+                    Console.WriteLine("bestmove {0}{1}", posi[0], posf[0]);
+                    go = false;
+                    p.Kill();
+                    posf.Clear();
+                    posi.Clear();
 
                 }
-                else if (movement != "" && countm> 1)
+                else if (posi.Count > 1 || posf.Count > 1)
                 {
-                    fala.Speak("Tem mais de uma possibilidade, indique qual a peça a mover!");
+                    fala.Speak("Tem mais de uma possibilidade, use o comando quero mexer!");
                     // ativar cenas para complementar a jogada
 
                 }
                 else
                 {
-                    fala.Speak("Não possui jogadas para capturar "+ aux[1]);
+                    fala.Speak("Não possui jogadas para capturar a peça escolhida!");
                 }
 
             }
@@ -592,7 +674,6 @@ namespace Test
                     movement = "Tem" + movement + "movimentos possíveis!";
                 }
                 fala.Speak(movement);
-                new SpeechRecognizer("grammar.grxml");
 
             }
             else if (aux[0] == "6") // help
@@ -606,11 +687,10 @@ namespace Test
 
                 for (int j = 1; j < 9; j++)
                 {
-                    // Console.WriteLine("if: {0}=={1}", letras[j], auxes[0]);
                     if (letras[j] == auxes1[0].ToString())
                     {
-                        pi.letra = j;
-                        pi.num = Int32.Parse(auxes1[1].ToString());
+                        pf.letra = j;
+                        pf.num = Int32.Parse(auxes1[1].ToString());
                     }
                     if (letras[j] == auxes[0].ToString())
                     {
@@ -621,14 +701,8 @@ namespace Test
 
                 fala.Speak("A melhor jogada é " + move);
 
-                // Console.WriteLine("{0},{1}->{2},{3}", pf.letra, pf.num, pi.letra, pi.num);
-
             }
-            else if (aux[0] == "7") //é capaz de ser preciso futuramente
-            {
-
-               
-            }
+           
 
         }
 
@@ -680,7 +754,6 @@ namespace Test
         private void SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             Program main = new Program();
-            Debug.WriteLine("listened\n");
 
             //gets recognized text.
 

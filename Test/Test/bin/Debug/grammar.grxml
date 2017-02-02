@@ -21,10 +21,12 @@ xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0" >
 		<item>"quantas jogadas posso fazer"</item>
 		<item>"qual a melhor jogada"</item>
 		<item>"quero mexer "</item>
-		<item>"quero comer"</item>
+		<item>"quero capturar"</item>
 		<item>"começar um novo jogo"</item>
-		<item>"quero desistir"</item>
-		<item>"fazer castelo"</item>
+		<item>"quero desistir do jogo"</item>
+		<item>"quero fazer castelo"</item>
+		<item>"sim"</item>
+		<item>"não"</item>
 	</one-of>
 	</item>
 </rule>
